@@ -7,13 +7,18 @@ const useSession = () => {
     const fetchSession = async () => {
       const res = await fetch('/api/auth/session');
       const data = await res.json();
-      setSession(data);
+
+      if (!data || !data.user) {
+        setSession(null);
+      } else {
+        setSession(data);
+      }
     };
 
     fetchSession();
   }, []);
 
-  return { session };
+  return { session, loading };
 };
 
 export default useSession;
